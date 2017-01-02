@@ -1,7 +1,12 @@
+const User = require('../models/user');
+
 exports.signup = function(req, res, next) {
 	const email = req.body.email;
 	const password = req.body.password;
 	//see if a user with given email exists
+	User.findOne({ email: email }, function(err, existingUser) {
+
+	});
 
 	//if a user with email exists, return error
 
