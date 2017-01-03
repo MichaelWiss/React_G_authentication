@@ -8,7 +8,15 @@ const LocalStrategy = require('passport-local');
 //create local strategy
 const localOptions = { usernamField: 'email' };
 const localLogin = new LocalStrategy({ localOptions }, function(email, password, done) {
+//verify username and password, call done with user
+//if it is the correct email and password
+//otherwise call done with false
+ User.findOne({ email: email }, function(err, user) {
+ 	if (err) { return done(err); }
+ 	if (!user) { return done(null, false); }
 
+ 	//compare passwords - is 'password' equal to user.password?
+ });
 });
 
 
