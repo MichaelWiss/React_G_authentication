@@ -6,12 +6,12 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 const LocalStrategy = require('passport-local');
 
 //create local strategy
-const localOptions = { usernamField: 'email' };
-const localLogin = new LocalStrategy({ localOptions }, function(email, password, done) {
+const localOptions = { usernameField: 'email' };
+const localLogin = new LocalStrategy(localOptions , function(email, password, done) {
 //verify username and password, call done with user
 //if it is the correct email and password
 //otherwise call done with false
- User.findOne({ email: email }, function(err, user) {
+ User.findOne({ email: email.toLowerCase() }, function(err, user) {
  	if (err) { return done(err); }
  	if (!user) { return done(null, false); }
 
@@ -41,7 +41,7 @@ const jwtLogin = new JwtStrategy(jwtOptions, function(payload, done) {
    //if it does, call done with that otherwise
    //call done with user object
    User.findById(payload.sub, function(err, user) {
-   	  if (err) {return done(err, false); }
+   	  if (err) { return done(err, false); }
 
 
    	  if(user) {
